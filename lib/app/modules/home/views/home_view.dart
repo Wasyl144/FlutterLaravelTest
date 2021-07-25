@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,6 +19,8 @@ class HomeView extends GetView<HomeController> {
             margin: EdgeInsets.all(8),
             child: SingleChildScrollView(
               child: Form(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                key: controller.loginFormKey,
                 child: Column(
                   children: <Widget>[
                     Image.asset("assets/images/login_image.jpg"),
@@ -34,6 +37,14 @@ class HomeView extends GetView<HomeController> {
                           prefixIcon: Icon(Icons.person)),
                       obscureText: false,
                       maxLength: 50,
+                      controller: controller.emailController,
+                      onSaved: (value) {
+                        controller.email = value!;
+                      },
+                      validator: (value) {
+                        controller.validateEmail(value!);
+                      },
+                      keyboardType: TextInputType.emailAddress,
                     ),
                     SizedBox(
                       height: 20,
@@ -47,9 +58,19 @@ class HomeView extends GetView<HomeController> {
                           prefixIcon: Icon(Icons.password)),
                       obscureText: true,
                       maxLength: 50,
+                      keyboardType: TextInputType.visiblePassword,
+                      controller: controller.passwordController,
+                      onSaved: (value) {
+                        controller.password = value!;
+                      },
+                      validator: (value) {
+                        controller.validatePassword(value!);
+                      },
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        controller.checkLogin();
+                      },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.blueGrey),
                         padding: MaterialStateProperty.all(EdgeInsets.all(20))
