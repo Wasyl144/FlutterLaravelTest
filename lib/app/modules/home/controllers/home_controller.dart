@@ -1,6 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:laraveltest/app/modules/home/exceptions/credentials_not_found_exception.dart';
+import 'package:laraveltest/app/modules/home/services/login_service.dart';
+import 'package:laraveltest/app/modules/home/utils/show_getx_components.dart';
 
 class HomeController extends GetxController {
 
@@ -9,6 +12,8 @@ class HomeController extends GetxController {
   var password = "";
 
   late TextEditingController emailController, passwordController;
+
+  final loginService = Get.find<LoginService>();
 
   @override
   void onInit() {
@@ -36,22 +41,33 @@ class HomeController extends GetxController {
   }
 
   String? validatePassword (String passwd) {
-    print(passwd.length <= 6);
-
-    if(passwd.length <= 6) {
-      return "Password must be of 6 characters";
+    if(passwd.length <= 4) {
+      return "Password must be of 4 characters";
     }
     return null;
   }
 
+  void login() async {
+    try {
+      var userToken = await loginService.login(email, password);
+      ShowGetxComponents.showSnackBar("Success", "You're logged in!", Colors.lightBlue);
+    } on CredentialsNotFoundException {
+      ShowGetxComponents.showSnackBar("Error", "Login failed, check your credentials or create a Account.", Colors.red);
+    }
+    catch(ex) {
+      ShowGetxComponents.showDialog("Error", ex.toString(), Colors.red);
+    }
+
+
+  }
+
   void checkLogin() {
     final isValid = loginFormKey.currentState!.validate();
-    print(isValid);
     if(!isValid) {
-      print("ferer");
       return;
     }
     loginFormKey.currentState!.save();
+    login();
   }
 
 }
