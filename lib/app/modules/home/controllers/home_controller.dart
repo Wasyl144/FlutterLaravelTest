@@ -14,6 +14,7 @@ class HomeController extends GetxController {
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
   late Box dbBox;
+  var isLoading = false.obs;
 
   var email = "";
   var password = "";
@@ -56,17 +57,21 @@ class HomeController extends GetxController {
 
   void login() async {
     try {
+      isLoading(true);
       var userToken = await loginService.login(email, password);
       dbBox.put('userToken', userToken);
       ShowGetxComponents.showSnackBar(
           "Success", "You're logged in!", Colors.lightBlue);
+      isLoading(false);
       Get.toNamed(Routes.USER);
     } on CredentialsNotFoundException {
+      isLoading(false);
       ShowGetxComponents.showSnackBar(
           "Error",
           "Login failed, check your credentials or create a Account.",
           Colors.red);
     } catch (ex) {
+      isLoading(false);
       ShowGetxComponents.showDialog("Error", ex.toString(), Colors.red);
     }
   }
