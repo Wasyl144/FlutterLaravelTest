@@ -36,8 +36,10 @@ class HomeController extends GetxController {
   }
 
   String? validatePassword (String passwd) {
+    print(passwd.length <= 6);
+
     if(passwd.length <= 6) {
-      return "Password mus be of 6 characters";
+      return "Password must be of 6 characters";
     }
     return null;
   }

@@ -27,7 +27,7 @@ class LoginService extends APIService{
     }
     var resString = res.bodyString;
     var resJson = jsonDecode(resString!);
-    var token = resJson["token"];
+    var token = resJson["auth_token"];
 
     return token;
   }

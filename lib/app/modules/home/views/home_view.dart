@@ -10,7 +10,7 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('HomeView'),
+          title: Text('Login to app'),
           centerTitle: true,
         ),
         body: SafeArea(
@@ -42,7 +42,7 @@ class HomeView extends GetView<HomeController> {
                         controller.email = value!;
                       },
                       validator: (value) {
-                        controller.validateEmail(value!);
+                        return controller.validateEmail(value!);
                       },
                       keyboardType: TextInputType.emailAddress,
                     ),
@@ -64,9 +64,10 @@ class HomeView extends GetView<HomeController> {
                         controller.password = value!;
                       },
                       validator: (value) {
-                        controller.validatePassword(value!);
+                        return controller.validatePassword(value!);
                       },
                     ),
+                    SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
                         controller.checkLogin();
