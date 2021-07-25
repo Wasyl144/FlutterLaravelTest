@@ -44,7 +44,7 @@ class UserController extends GetxController {
   void logout() {
     var box = Hive.box("db");
     box.delete("userToken");
-    Get.toNamed(Routes.HOME);
+    Get.offAllNamed(Routes.HOME);
   }
 
 

@@ -18,10 +18,10 @@ class HomeView extends GetView<HomeController> {
             color: Colors.white,
             margin: EdgeInsets.all(8),
             child: Obx(() {
-              if(controller.isLoading.value) {
-               return Center(
-                 child:  Image.asset("assets/images/loading_inf.gif"),
-               );
+              if (controller.isLoading.value) {
+                return Center(
+                  child: Image.asset("assets/images/loading_inf.gif"),
+                );
               }
               return SingleChildScrollView(
                 child: Form(
@@ -80,9 +80,9 @@ class HomeView extends GetView<HomeController> {
                         },
                         style: ButtonStyle(
                             backgroundColor:
-                            MaterialStateProperty.all(Colors.blueGrey),
+                                MaterialStateProperty.all(Colors.blueGrey),
                             padding:
-                            MaterialStateProperty.all(EdgeInsets.all(20))),
+                                MaterialStateProperty.all(EdgeInsets.all(20))),
                         child: Center(
                           child: Text("Login"),
                         ),

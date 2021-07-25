@@ -11,7 +11,7 @@ class HomeController extends GetxController {
     dbBox = Hive.box("db");
   }
 
-  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
   late Box dbBox;
   var isLoading = false.obs;
@@ -63,7 +63,7 @@ class HomeController extends GetxController {
       ShowGetxComponents.showSnackBar(
           "Success", "You're logged in!", Colors.lightBlue);
       isLoading(false);
-      Get.toNamed(Routes.USER);
+      Get.offAllNamed(Routes.USER);
     } on CredentialsNotFoundException {
       isLoading(false);
       ShowGetxComponents.showSnackBar(
