@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:laraveltest/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,9 +73,10 @@ class HomeView extends GetView<HomeController> {
                         controller.checkLogin();
                       },
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.blueGrey),
-                        padding: MaterialStateProperty.all(EdgeInsets.all(20))
-                      ),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.blueGrey),
+                          padding:
+                              MaterialStateProperty.all(EdgeInsets.all(20))),
                       child: Center(
                         child: Text("Login"),
                       ),

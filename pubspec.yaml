@@ -9,9 +9,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: 4.2.4
   connectivity_plus: 1.0.6
-  flutter_secure_storage: 4.2.0
   flutter: 
     sdk: flutter
+  hive: ^2.0.4
+  hive_flutter: ^1.1.0
+  path_provider: ^2.0.2
+  permission_handler: ^8.1.4+1
 
 dev_dependencies: 
   flutter_lints: ^1.0.0

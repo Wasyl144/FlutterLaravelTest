@@ -1,13 +1,20 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:laraveltest/app/modules/home/exceptions/credentials_not_found_exception.dart';
+import 'package:hive/hive.dart';
+import 'package:laraveltest/app/shared/exceptions/credentials_not_found_exception.dart';
 import 'package:laraveltest/app/modules/home/services/login_service.dart';
-import 'package:laraveltest/app/modules/home/utils/show_getx_components.dart';
+import 'package:laraveltest/app/shared/utils/show_getx_components.dart';
+import 'package:laraveltest/app/routes/app_pages.dart';
 
 class HomeController extends GetxController {
+  HomeController() {
+    dbBox = Hive.box("db");
+  }
 
-  final GlobalKey<FormState>loginFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+
+  late Box dbBox;
+
   var email = "";
   var password = "";
 
@@ -33,15 +40,15 @@ class HomeController extends GetxController {
     passwordController.dispose();
   }
 
-  String? validateEmail (String email) {
-    if(!GetUtils.isEmail(email)) {
+  String? validateEmail(String email) {
+    if (!GetUtils.isEmail(email)) {
       return "Provide valid email address.";
     }
     return null;
   }
 
-  String? validatePassword (String passwd) {
-    if(passwd.length <= 4) {
+  String? validatePassword(String passwd) {
+    if (passwd.length <= 4) {
       return "Password must be of 4 characters";
     }
     return null;
@@ -50,24 +57,26 @@ class HomeController extends GetxController {
   void login() async {
     try {
       var userToken = await loginService.login(email, password);
-      ShowGetxComponents.showSnackBar("Success", "You're logged in!", Colors.lightBlue);
+      dbBox.put('userToken', userToken);
+      ShowGetxComponents.showSnackBar(
+          "Success", "You're logged in!", Colors.lightBlue);
+      Get.toNamed(Routes.USER);
     } on CredentialsNotFoundException {
-      ShowGetxComponents.showSnackBar("Error", "Login failed, check your credentials or create a Account.", Colors.red);
-    }
-    catch(ex) {
+      ShowGetxComponents.showSnackBar(
+          "Error",
+          "Login failed, check your credentials or create a Account.",
+          Colors.red);
+    } catch (ex) {
       ShowGetxComponents.showDialog("Error", ex.toString(), Colors.red);
     }
-
-
   }
 
   void checkLogin() {
     final isValid = loginFormKey.currentState!.validate();
-    if(!isValid) {
+    if (!isValid) {
       return;
     }
     loginFormKey.currentState!.save();
     login();
   }
-
 }
