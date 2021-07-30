@@ -11,6 +11,7 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Login to app'),
+
           centerTitle: true,
         ),
         body: SafeArea(
@@ -80,11 +81,25 @@ class HomeView extends GetView<HomeController> {
                         },
                         style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all(Colors.blueGrey),
+                                MaterialStateProperty.all(Colors.green),
                             padding:
                                 MaterialStateProperty.all(EdgeInsets.all(20))),
                         child: Center(
                           child: Text("Login"),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          Get.toNamed(Routes.REGISTER);
+                        },
+                        style: ButtonStyle(
+                            backgroundColor:
+                            MaterialStateProperty.all(Colors.blueGrey),
+                            padding:
+                            MaterialStateProperty.all(EdgeInsets.all(20))),
+                        child: Center(
+                          child: Text("Register"),
                         ),
                       ),
                     ],

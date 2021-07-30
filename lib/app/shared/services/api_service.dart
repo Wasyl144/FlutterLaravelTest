@@ -9,12 +9,18 @@ class APIService extends GetConnect {
     httpClient.baseUrl = ConnectionConfig.API_URL;
     var box = Hive.box("db");
     var token = box.get("userToken");
+    httpClient.addRequestModifier((Request request) {
+      request.headers['Accept'] = "Application/json";
+      return request;
+    });
     if (token != null) {
       httpClient.addRequestModifier((Request request) {
         request.headers['Authorization'] = "Bearer $token";
         return request;
       });
     }
+    httpClient.followRedirects = true;
+    httpClient.maxRedirects = 5;
     super.onInit();
   }
 }
